@@ -261,6 +261,5 @@ class AzureBlobStorageAdapter extends StorageBase {
   }
 }
 
-module.exports = AzureBlobStorageAdapter;
 export default AzureBlobStorageAdapter;
 export { AzureBlobStorageAdapter };

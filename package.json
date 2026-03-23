@@ -1,6 +1,6 @@
 {
   "name": "ghost-azure-storage-adapter",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Ghost storage adapter for Azure Blob Storage with managed identity and key-based auth support",
   "main": "dist/AzureBlobStorageAdapter.js",
   "types": "dist/AzureBlobStorageAdapter.d.ts",
@@ -47,6 +47,6 @@
     "@types/express": "^4.17.21",
     "@types/node": "^20.11.0",
     "typescript": "^5.3.0",
-    "vitest": "^2.0.0"
+    "vitest": "^4.1.0"
   }
 }
