@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+      - run: npm test
+
+  version-check:
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Check version is not already published
+        run: |
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          LOCAL_VERSION=$(node -p "require('./package.json').version")
+          echo "Checking if $PACKAGE_NAME@$LOCAL_VERSION exists on npm..."
+          if npm view "$PACKAGE_NAME@$LOCAL_VERSION" version 2>/dev/null; then
+            echo "::error::Version $LOCAL_VERSION already exists on npm. Bump the version in package.json before merging."
+            exit 1
+          else
+            echo "Version $LOCAL_VERSION is not yet published. Good to go."
+          fi
