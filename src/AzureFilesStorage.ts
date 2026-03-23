@@ -6,5 +6,4 @@ class AzureFilesStorage extends AzureBlobStorageAdapter {
   }
 }
 
-module.exports = AzureFilesStorage;
 export default AzureFilesStorage;

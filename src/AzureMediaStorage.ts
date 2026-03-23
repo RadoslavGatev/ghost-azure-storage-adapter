@@ -6,5 +6,4 @@ class AzureMediaStorage extends AzureBlobStorageAdapter {
   }
 }
 
-module.exports = AzureMediaStorage;
 export default AzureMediaStorage;
