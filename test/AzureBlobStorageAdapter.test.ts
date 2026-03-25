@@ -63,6 +63,18 @@ vi.mock('fs/promises', () => ({
   readFile: vi.fn().mockResolvedValue(Buffer.from('image-data')),
 }));
 
+// Mock ghost-storage-base – Ghost provides this at runtime; we supply a stub for tests
+vi.mock('ghost-storage-base', () => {
+  class StorageBase {
+    protected storagePath = '';
+    getTargetDir() { return ''; }
+    getUniqueFileName(file: { name: string }, _dir: string) {
+      return Promise.resolve(file.name);
+    }
+  }
+  return { default: StorageBase, __esModule: true };
+});
+
 // Mock @azure/storage-blob to avoid loading the heavy SDK in tests
 vi.mock('@azure/storage-blob', () => ({
   BlobServiceClient: class {
